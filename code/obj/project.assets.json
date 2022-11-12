@@ -1,0 +1,91 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "tools/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/tools.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/tools.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "tools/1.0.0": {
+      "type": "project",
+      "path": "../../../../../../Program Files (x86)/Steam/steamapps/common/sbox/addons/tools/tools.csproj",
+      "msbuildProject": "../../../../../../Program Files (x86)/Steam/steamapps/common/sbox/addons/tools/tools.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "tools >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Bae\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "c:\\users\\bae\\documents\\s&box projects\\tardiseditor\\code\\tardiseditor.csproj",
+      "projectName": "tardiseditor",
+      "projectPath": "c:\\users\\bae\\documents\\s&box projects\\tardiseditor\\code\\tardiseditor.csproj",
+      "packagesPath": "C:\\Users\\Bae\\.nuget\\packages\\",
+      "outputPath": "c:\\users\\bae\\documents\\s&box projects\\tardiseditor\\code\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Bae\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\addons\\tools\\tools.csproj": {
+              "projectPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\addons\\tools\\tools.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

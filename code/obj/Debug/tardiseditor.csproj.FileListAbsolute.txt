@@ -1,0 +1,5 @@
+C:\Users\Bae\Documents\S&box Projects\tardiseditor\code\obj\Debug\tardiseditor.csproj.AssemblyReference.cache
+C:\Users\Bae\Documents\S&box Projects\tardiseditor\code\obj\Debug\tardiseditor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Bae\Documents\S&box Projects\tardiseditor\code\obj\Debug\tardiseditor.AssemblyInfoInputs.cache
+C:\Users\Bae\Documents\S&box Projects\tardiseditor\code\obj\Debug\tardiseditor.AssemblyInfo.cs
+C:\Users\Bae\Documents\S&box Projects\tardiseditor\code\obj\Debug\tardiseditor.csproj.CoreCompileInputs.cache
