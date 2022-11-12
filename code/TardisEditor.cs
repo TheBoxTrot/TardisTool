@@ -40,37 +40,14 @@ internal class TardisEditor : BaseResourceEditor<exteriorDefinition>
 			Progress.Update( asset.Name, ++i, allClothes.Length );
 
 			var resource = asset.LoadResource<BaseDefinition>();
-			RenderIcon( asset, resource );
+			
 
 			if ( token.IsCancellationRequested )
 				return;
 		}
 	}
 
-	private static void RenderIcon( Asset asset, BaseDefinition resource )
-	{
-		// force an icon path
-		var iconInfo = resource.Icon;
-
-		iconInfo.Path = $"/clothing_icons/{asset.Name}.png";
-		resource.Icon = iconInfo;
-
-		var Scene = new ClothingScene();
-		Scene.UpdateLighting();
-		Scene.InstallClothing( resource );
-		Scene.UpdateCameraPosition();
-
-		var pixelMap = new Pixmap( 256, 256 );
-		Scene.Camera.RenderToPixmap( pixelMap );
-
-		if ( asset.SaveToDisk( resource ) )
-		{
-			asset.Compile( false );
-		}
-
-		var root = asset.AbsolutePath[0..^(asset.RelativePath.Length)];
-		pixelMap.SavePng( root + iconInfo.Path );
-	}
+	
 
 	class IconProperty : Widget
 	{
@@ -166,8 +143,8 @@ internal class TardisEditor : BaseResourceEditor<exteriorDefinition>
 
 		public void InstallClothing( BaseDefinition clothing )
 		{
-			var created = BaseDefinition.DressSceneObject( Body, new BaseDefinition[] { clothing } );
-			TargetModel = created.FirstOrDefault();
+			
+			
 
 			if ( TargetModel == null )
 			{
