@@ -49,7 +49,27 @@ public partial class BaseDefinition : GameResource
 		get;
 		set;
 	}
+	public List<Bodygroup> mainbody
+	{
+		get;
+		set;
+	}
+	public List<Bodygroup> maindoor
+	{
+		get;
+		set;
+	}
+	public int Main_body_skin
+	{
+		get;
+		set;
+	}
 
+	public int Main_door_skin
+	{
+		get;
+		set;
+	}
 	public float main_portal_width
 	{
 		get;
@@ -65,8 +85,12 @@ public partial class BaseDefinition : GameResource
 		get;
 		set;
 	}
-
-
+	[DefaultValue( "1,1,1" )]
+	public float main_door_scale
+	{
+		get;
+		set;
+	} = 1;
 
 	public SoundFile Sound_on_pressed_main_door
 	{
@@ -163,13 +187,51 @@ public partial class BaseDefinition : GameResource
 		TriggerButtonAction,
 		custom,
 	}
-	
 
-
-
-
-	public struct tardisparts
+	public struct Bodygroup
 	{
+		public int bodygroupnum
+		{
+			get;
+			set;
+		}
+		public int bodygroupvalve
+		{
+			get;
+			set;
+		}
+	}
+	public struct ParticleControlPoints
+	{
+		public int Controlpointnum
+		{
+			get;
+			set;
+		}
+		public Vector3 Controlpointval
+		{
+			get;
+			set;
+		}
+	}
+
+	public struct ToolTips
+	{
+		[Description( "The text that will be displayed in the tooltip (Leave blank to set to name)" )]
+		public string displaytext
+		{
+			get;
+			set;
+		}
+		public Vector3 offset
+		{
+			get;
+			set;
+		}
+
+	}
+		public struct tardisparts
+		{
 		public bool needslight => Category == partCategory.Light;
 		public bool Needsparticle => Category == partCategory.tparticle;
 		public bool NeedsModel => Category == partCategory.BaseButton || Category == partCategory.basepart;
@@ -181,6 +243,7 @@ public partial class BaseDefinition : GameResource
 			set;
 		}
 	
+
 		public string Name
 		{
 			get;
@@ -200,6 +263,12 @@ public partial class BaseDefinition : GameResource
 			get;
 			set;
 		}
+		[ShowIf( nameof( Needsparticle ), true )]
+		public List<ParticleControlPoints> particlecontrolpoint
+		{
+			get;
+			set;
+		}
 		[ShowIf( nameof( needslight ), true )]
 		public Color lightColour
 		{
@@ -212,7 +281,18 @@ public partial class BaseDefinition : GameResource
 			get;
 			set;
 		}
-
+		[ShowIf( nameof( NeedsModel ), true )]
+		public List<Bodygroup> bodygroup
+		{
+			get;
+			set;
+		}
+		[ShowIf( nameof( NeedsModel ), true )]
+		public int skin
+		{
+			get;
+			set;
+		}
 		public SoundEvent Sound_on_pressed
 		{
 			get;
@@ -265,7 +345,13 @@ public partial class BaseDefinition : GameResource
 		// Summary:
 		//     Width of the decal.
 
-		[HideIf( nameof( Category ), partCategory.Light )]
+		[ShowIf( nameof( Category ), partCategory.BaseButton )]
+		public ToolTips Tooltips
+		{
+			get;
+			set;
+		}
+		[ShowIf( nameof( Category ), partCategory.BaseButton )]
 		[Title( "Action" )]
 		public List<actions> actions
 		{

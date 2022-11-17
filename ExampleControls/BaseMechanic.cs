@@ -3,16 +3,24 @@ using static BaseDefinition.tardisparts;
 
 public partial class BaseMechanic : BaseNetworkable
 {
-
+	public virtual BaseNetworkable WhoTriggeredMeLast { get; protected set; }
+	public TimeSince TimeSinceLastTriggered { get; protected set; }
 	public virtual string ControlName { get; protected set; }
 	public List<BaseCondition> MyConditions = new();
 	[Net] public bool Activated { get; protected set; } = false;
 	public virtual bool RequiresPower { get; protected set; } = true;
+	public int timestriggereddebug = 0;
 	public virtual void Startup()
 	{
 
 	}
-	
+
+
+	public virtual void OnFailed()
+	{
+
+	}
+
 	public virtual void callback( String act )
 	{
 		
@@ -40,7 +48,7 @@ public partial class BaseMechanic : BaseNetworkable
 				finalcondition = temp[0];
 				foreach ( var tempconditions in temp )
 				{
-
+					
 					if ( tempconditions.ConditionPriority < finalcondition.ConditionPriority )
 					{
 						finalcondition = tempconditions;
@@ -51,8 +59,11 @@ public partial class BaseMechanic : BaseNetworkable
 		}
 		return finalcondition;
 	}
-	public virtual void Action( Entity entity )
+	public virtual void Action( Entity entity, BaseNetworkable Triggerentity )
 	{
+		timestriggereddebug++;
+		
+		WhoTriggeredMeLast = Triggerentity;
 		BaseCondition cond;
 		cond = CheckConditions();
 		Log.Info( cond );
@@ -60,7 +71,7 @@ public partial class BaseMechanic : BaseNetworkable
 		{
 			if ( ConditionAction( cond, entity ) == false )
 			{
-				cond.Trigger( entity );
+				cond.Trigger( entity ,this);
 			}
 		}
 		else DoAction(  entity );

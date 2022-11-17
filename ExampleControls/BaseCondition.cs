@@ -5,7 +5,11 @@ using static BaseDefinition.tardisparts;
 using System.Runtime.ConstrainedExecution;
 
 public partial class BaseCondition : BaseNetworkable
-{   /// <summary>
+{
+	public virtual BaseNetworkable WhoTriggeredMeLast { get; protected set; }
+	public TimeSince TimeSinceLastTriggered { get; protected set; }
+
+	/// <summary>
 	/// The name of the condition
 	/// </summary>
 	public virtual String ConditionName { get; protected set; }
@@ -32,19 +36,25 @@ public partial class BaseCondition : BaseNetworkable
 	{
 
 	}
-	/// <summary>
-	/// A function that is Called when A mechanic or another condition triggers it
-	/// </summary>
-	/// <param name="entity"></param>
-	public void Trigger( Entity entity )
+	public virtual void callback( String act )
 	{
+		
+		
+	}
+		/// <summary>
+		/// A function that is Called when A mechanic or another condition triggers it
+		/// </summary>
+		/// <param name="entity"></param>
+		public void Trigger( Entity entity , BaseNetworkable triggerentity )
+	{
+		WhoTriggeredMeLast = triggerentity;
 			BaseCondition cond;
 			cond = CheckConditions();
 			if ( cond != null )
 			{
 				if ( ConditionAction( cond ) == false )
 				{
-					cond.Trigger( entity );
+					cond.Trigger( entity ,this);
 				}
 			}
 			else DoAction( entity );

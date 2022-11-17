@@ -11,6 +11,12 @@ public partial class BaseCallBack : BaseNetworkable
 	/// </summary>
 	public List<BaseMechanic> MyMechanics = new();
 
+	/// <summary>
+	/// This is the List of all the parts that are using this callback
+	/// </summary>
+	public List<ITardisPart> MyParts = new();
+
+
 	public ent_tardis ctrl;
 	public void Add ( BaseMechanic Mechanic)
 	{
@@ -39,6 +45,10 @@ public partial class BaseCallBack : BaseNetworkable
 	public List<BaseMechanic> GetMechanicList()
 	{
 		return MyMechanics;
+	}
+	public List<ITardisPart> GetPartsList()
+	{
+		return MyParts;
 	}
 	public String GetName()
 	{
