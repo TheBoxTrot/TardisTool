@@ -7,12 +7,7 @@ using static Sandbox.Package;
 
 public partial class BaseDefinition : GameResource
 {
-	[Property]
-	public bool has_main_portal
-	{
-		get;
-		set;
-	}
+	
 	public bool HasChanged = false;
 	protected override void PostReload()
 	{
@@ -20,11 +15,7 @@ public partial class BaseDefinition : GameResource
 		
 	}
 
-	public SoundEvent Door_on_pressed
-	{
-		get;
-		set;
-	}
+	
 
 	public SoundEvent Door_open_sound
 	{
@@ -70,16 +61,31 @@ public partial class BaseDefinition : GameResource
 		get;
 		set;
 	}
+	[Description( "X is Depth, Y is Width , Z is Height" )]
+	public Vector3 PortalExtends
+	{
+		get;
+		set;
+	}
+	/// <summary>
+	/// legacy needs removing
+	/// </summary>
 	public float main_portal_width
 	{
 		get;
 		set;
 	}
+	/// <summary>
+	/// legacy needs removing
+	/// </summary>
 	public float main_portal_depth
 	{
 		get;
 		set;
 	}
+	/// <summary>
+	/// legacy needs removing
+	/// </summary>
 	public float main_portal_height
 	{
 		get;
@@ -97,7 +103,7 @@ public partial class BaseDefinition : GameResource
 		get;
 		set;
 	}
-	[DefaultValue( "5 5 0" )]
+	[DefaultValue( "0 0 0" )]
 	public Vector3 Offset_main_door
 	{
 		get;
@@ -232,8 +238,12 @@ public partial class BaseDefinition : GameResource
 	}
 		public struct tardisparts
 		{
+		///maybe need a way to have these selectable in editor if using a custom type. although keep what matt said in mind. 
+		[ShowIf( nameof( Category ), partCategory.custom )]
 		public bool needslight => Category == partCategory.Light;
+		[ShowIf( nameof( Category ), partCategory.custom )]
 		public bool Needsparticle => Category == partCategory.tparticle;
+		[ShowIf( nameof( Category ), partCategory.custom )]
 		public bool NeedsModel => Category == partCategory.BaseButton || Category == partCategory.basepart;
 		[ShowIf( nameof( Category ), partCategory.custom )]
 		[Title( "custom properties" )]
@@ -281,6 +291,28 @@ public partial class BaseDefinition : GameResource
 			get;
 			set;
 		}
+		[ShowIf( nameof( needslight ), true )]
+		public float Brightness
+		{
+			get;
+			set;
+		}
+		[Title( "Light act like lamp" )]
+		[Description("the light brightness will be tied to the phasing effect on the tardis and will be off when dematerlized")]
+		[ShowIf( nameof( needslight ), true )]
+		public bool LightasLamp
+		{
+			get;
+			set;
+		}
+		[Title( "Essential Light" )]
+		[Description( "wheather or not the light is essential to the tardis aka if the light stays on while the power is off" )]
+		[ShowIf( nameof( needslight ), true )]
+		public bool RequiredLight
+		{
+			get;
+			set;
+		}
 		[ShowIf( nameof( NeedsModel ), true )]
 		public List<Bodygroup> bodygroup
 		{
@@ -293,12 +325,14 @@ public partial class BaseDefinition : GameResource
 			get;
 			set;
 		}
+		
+			[ShowIf( nameof( partCategory.BaseButton ), true )]
 		public SoundEvent Sound_on_pressed
 		{
 			get;
 			set;
 		}
-		[DefaultValue( "5 5 0" )]
+		[DefaultValue( "0 0 0" )]
 		public Vector3 Offset
 		{
 			get;

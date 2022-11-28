@@ -44,6 +44,7 @@ namespace Sandbox
 			set;
 		}
 		[Category( "Sounds" )]
+		[DefaultValue( "sounds/tardis/demat.sound" )]
 		public SoundEvent fullPhaseSound_damaged
 		{
 			get;
