@@ -67,42 +67,16 @@ public partial class BaseDefinition : GameResource
 		get;
 		set;
 	}
-	/// <summary>
-	/// legacy needs removing
-	/// </summary>
-	public float main_portal_width
-	{
-		get;
-		set;
-	}
-	/// <summary>
-	/// legacy needs removing
-	/// </summary>
-	public float main_portal_depth
-	{
-		get;
-		set;
-	}
-	/// <summary>
-	/// legacy needs removing
-	/// </summary>
-	public float main_portal_height
-	{
-		get;
-		set;
-	}
-	[DefaultValue( "1,1,1" )]
+
+
+	
 	public float main_door_scale
 	{
 		get;
 		set;
 	} = 1;
 
-	public SoundFile Sound_on_pressed_main_door
-	{
-		get;
-		set;
-	}
+
 	[DefaultValue( "0 0 0" )]
 	public Vector3 Offset_main_door
 	{
@@ -110,7 +84,7 @@ public partial class BaseDefinition : GameResource
 		set;
 	}
 
-	public Rotation Rotation_main_door
+	public Vector3 Rotation_main_door
 	{
 		get;
 		set;
@@ -150,12 +124,7 @@ public partial class BaseDefinition : GameResource
 
 
 
-	[Title( "parts" )]
-		public List<tardisparts> parts
-		{
-			get;
-			set;
-		}
+	
 
 
 	public enum Custompropetytype
@@ -192,6 +161,14 @@ public partial class BaseDefinition : GameResource
 		hads,
 		TriggerButtonAction,
 		custom,
+	}
+	public enum ButtonState
+	{
+		Either,
+		Up,
+		Down,
+		
+
 	}
 
 	public struct Bodygroup
@@ -236,7 +213,13 @@ public partial class BaseDefinition : GameResource
 		}
 
 	}
-		public struct tardisparts
+
+	public enum ButtonType
+	{
+		SinglePress,
+		DuelPress,
+	}
+	public struct tardisparts
 		{
 		///maybe need a way to have these selectable in editor if using a custom type. although keep what matt said in mind. 
 		[ShowIf( nameof( Category ), partCategory.custom )]
@@ -252,7 +235,13 @@ public partial class BaseDefinition : GameResource
 			get;
 			set;
 		}
-	
+		[ShowIf( nameof( Category ), partCategory.custom )]
+		[Title( "classname" )]
+		public string CustomClassName
+		{
+			get;
+			set;
+		}
 
 		public string Name
 		{
@@ -266,6 +255,12 @@ public partial class BaseDefinition : GameResource
 			get;
 			set;
 		}
+		[ShowIf( nameof( Category ), partCategory.BaseButton )]
+		public SoundEvent Sound_on_pressed
+		{
+			get;
+			set;
+		}
 		[ShowIf( nameof( Needsparticle ), true )]
 		[Property, ResourceType( "vpcf" )]
 		public string particle
@@ -273,6 +268,10 @@ public partial class BaseDefinition : GameResource
 			get;
 			set;
 		}
+		
+		float? Model_scale;
+		[ShowIf( nameof( NeedsModel ), true )]
+		public float model_scale { get { return Model_scale ?? 1; } set { Model_scale = value; } }
 		[ShowIf( nameof( Needsparticle ), true )]
 		public List<ParticleControlPoints> particlecontrolpoint
 		{
@@ -326,12 +325,7 @@ public partial class BaseDefinition : GameResource
 			set;
 		}
 		
-			[ShowIf( nameof( partCategory.BaseButton ), true )]
-		public SoundEvent Sound_on_pressed
-		{
-			get;
-			set;
-		}
+	
 		[DefaultValue( "0 0 0" )]
 		public Vector3 Offset
 		{
@@ -387,7 +381,7 @@ public partial class BaseDefinition : GameResource
 		}
 		[ShowIf( nameof( Category ), partCategory.BaseButton )]
 		[Title( "Action" )]
-		public List<actions> actions
+		public List<Actions> actions
 		{
 			get;
 			set;
@@ -407,8 +401,12 @@ public partial class BaseDefinition : GameResource
 			throttle,
 			custom,
 			tparticle,
+			UIScreen,
 			etc5
 		}
+
+		
+
 
 		//
 		// Summary:
@@ -420,7 +418,7 @@ public partial class BaseDefinition : GameResource
 			IF,
 			IFNOT,
 		}
-		[Title( "conditions" )]
+		[Title( "Callbacks" )]
 		public List<conditionsstruct> conditionlist
 		{
 			get;
@@ -432,57 +430,55 @@ public partial class BaseDefinition : GameResource
 		//     Rotation to apply when placing the decal.
 
 
-
-
-
-		public enum conditions
-		{
-			TardisIsDead,
-			VR,
-			TardisBelow20PercentHealth,
-			hadsEnabled,
-			custom,
-		}
-		public enum conditionsActions
-		{
-			activate,
-			Lock,
-			ChangeSkin,
-			IgnoreUse,
-		}
 	
+
+
+	
+		
 		public struct conditionsstruct
 		{
 
-			public conditionTypes conditionstypes
+			
+			public string callbackname
 			{
 				get;
 				set;
 			}
-			public conditions conditions
+			public string callbackmessage
 			{
 				get;
 				set;
 			}
-			public conditionsActions conditionsActions
+		
+			public string callbackaction
 			{
 				get;
 				set;
 			}
+			public string actionmessage
+			{
+				get;
+				set;
+			}
+			public float callbackdelay
+			{
+				get;
+				set;
+			}
+		}
 
 
+			
 
-
-
-
-			public struct actions
+			public struct Actions
 			{
 				public ActionType Actiontype
 				{
 					get;
 					set;
 				}
-				[ShowIf( nameof( Actiontype ), ActionType.TriggerButtonAction )]
+		
+			[ShowIf( nameof( Actiontype ), ActionType.TriggerButtonAction )]
 				public string ActionTarget
 				{
 					get;
@@ -500,12 +496,26 @@ public partial class BaseDefinition : GameResource
 					get;
 					set;
 				}
+				
+				public ButtonState buttonstate
+				{
+					get;
+					set;
+				}
 			}
+
 		
-		}
+
+
+
 	}
 
-
+	[Title( "parts" )]
+	public List<tardisparts> parts
+	{
+		get;
+		set;
+	}
 
 
 

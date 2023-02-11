@@ -93,6 +93,12 @@ namespace Sandbox
 			set;
 		}
 		[Category( "Sounds" )]
+		public SoundEvent ChameleonCircuit
+		{
+			get;
+			set;
+		}
+		[Category( "Sounds" )]
 		public SoundEvent on_lock
 		{
 			get;
@@ -168,10 +174,32 @@ namespace Sandbox
 		}
 
 
+		[Property]
+		public bool DefaultRandomExterior
+		{
+			get;
+			set;
+		}
 
+		[Property]
+		public bool DefaultRandomInterior
+		{
+			get;
+			set;
+		}
+		[Property, ResourceType( "interior" )]
+		public List<string> Altinteriordef
+		{
+			get;
+			set;
+		}
 
-
-
+		[Property, ResourceType( "exterior" )]
+		public List<string> Altexteriordef
+		{
+			get;
+			set;
+		}
 
 	}
 }	
